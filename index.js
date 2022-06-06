@@ -28,6 +28,10 @@ app.get('/farms/new', (req, res) => {
   res.render('farms/new')
 });
 
+app.post('/farms', async (req, res) => {
+  
+})
+
 
 
 
