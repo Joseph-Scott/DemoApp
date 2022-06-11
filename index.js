@@ -50,8 +50,12 @@ app.get('/farms/:id/products/new', (req, res) => {
   res.render('products/new', { categories, id});
 });
 
-app.post('/farms/:id/products', (req, res) => {
-  res.send(req.body)
+app.post('/farms/:id/products', async (req, res) => {
+  const { id } = req.params;
+  const farm = await Farm.findById(id);
+  const { name, price, category } = req.body;
+  const product = new Product({ name, price, category });
+  res.send(farm)
 });
 
 
