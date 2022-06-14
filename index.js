@@ -31,13 +31,13 @@ app.get('/farms', async (req, res) => {
   res.render('farms/index', { farms })
 })
 
-app.get('/farms/new', (req, res) => {
-  res.render('farms/new')
+app.get('/farms/:id', async (req, res) => {
+  const farm = await Farm.findById(req.params.id).populate('products');
+  res.render('farms/show', { farm })
 });
 
-app.get('/farms/:id', async (req, res) => {
-  const farm = await Farm.findById(req.params.id);
-  res.render('farms/show', { farm })
+app.get('/farms/new', (req, res) => {
+  res.render('farms/new')
 });
 
 app.post('/farms', async (req, res) => {
@@ -60,7 +60,7 @@ app.post('/farms/:id/products', async (req, res) => {
   product.farm = farm;
   await farm.save();
   await product.save();
-  res.send(farm)
+  res.redirect(`/farms/${farm._id}`)
 });
 
 
